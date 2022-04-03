@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Sign Up!</title>
+        <link rel="stylesheet" type="text/css" href="./main.css">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <header>
+            <nav class="navigation">
+                <span class="title">Anonymous Secret Shop</span>
+                <ul>
+                    <li><a href="./login.html">로그인</a></li>
+                    <li><a href="./signup.html">회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h3>회원 가입 - 개인 정보 입력</h3>
+            <form>
+                <div class="form-element">
+                    <label id="form_name">닉네임</label>
+                    <input class="text-input" name="name" aria-labelledby="form_name" autofocus required/>
+                </div>
+                <div class="form-element">
+                    <label id="form_id">아이디</label>
+                    <input class="text-input" name="id" placeholder="영대소문자 및 숫자, 4자 이상" aria-labelledby="form_id" pattern="^[a-zA-Z0-9]{4,}$" required/>
+                </div>
+                <div class="form-element">
+                    <label id="form_password">비밀번호</label>
+                    <input class="text-input" name="password" placeholder="영대소문자 및 숫자, 8자 이상" type="password" pattern="^[a-zA-Z0-9]{8,}$" aria-labelledby="form_id" required/>
+                </div>
+                <div class="form-element">
+                    <label id="form_password_confirm">비밀번호 확인</label>
+                    <input class="text-input" name="password_confirm" placeholder="영대소문자 및 숫자, 8자 이상" type="password" pattern="^[a-zA-Z0-9]{8,}$" aria-labelledby="form_password_confirm" required/>
+                </div>
+                <div class="form-element">
+                    <label id="form_birth">생년월일</label>
+                    <input class="text-input" name="birth" type="date" aria-labelledby="form_birth"/>
+                </div>
+                <div class="form-element">
+                    <label id="form_tel">전화번호</label>
+                    <input class="text-input" name="tel" type="tel" placeholder="(###)-####-####" pattern="^(\(\d+\)-)?((\d)+)(-(\d)+)*$" aria-labelledby="form_tel"/>
+                </div>
+                <div class="form-element">
+                    <label id="form_donate">희망 가입비 (Won)</label>
+                    <input class="text-input" name="donate" type="range" aria-labelledby="form_donate" value="100000" min="1000" max="100000" step="1000" list="donate" oninput="amount.value=donate.value"/>
+                    <datalist id="donate">
+                        <option value="1000"></option>
+                        <option value="5000"></option>
+                        <option value="10000"></option>
+                        <option value="50000"></option>
+                        <option value="100000"></option>
+                    </datalist>
+                </div>
+                <p>희망 가입비는 1000원부터 100000만원까지 1000원 단위로 증가합니다.</p>
+                <input class="form-button form-submit" type="submit"/>
+                <button class="form-button form-cancel" type="reset">취소</button>
+            </form>
+        </main>
+    </body>
+</html>
