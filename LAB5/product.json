@@ -32,7 +32,7 @@
     {
         "name": "Ace Of Diamonds",
         "category": ["poker", "ace", "diamond"],
-        "image": "cards/2_of_diamonds.png",
+        "image": "cards/ace_of_diamonds.png",
         "price": 1234
     },
     {
