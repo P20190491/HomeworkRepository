@@ -1,0 +1,282 @@
+/* basic layout */
+
+body {
+    max-width: 1020px;
+    margin: auto;
+}
+
+main {
+    margin: 15px;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-items: center;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.item-img {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+.item-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.item button {
+    margin-top: 10px;
+}
+
+.search img {
+    width: 15px;
+    height: 15px;
+}
+
+/* navigation */
+
+nav.navigation {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    background-color: #222;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+nav.navigation ul {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav.navigation ul li {
+    text-align: center;
+    vertical-align: middle;
+}
+
+nav.navigation ul li a {
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    color:whitesmoke;
+}
+
+nav.navigation ul li a:hover {
+    text-decoration: none;
+    color:white;
+    background-color: #444;
+}
+
+nav.navigation span.nav-title a:hover {
+    background-color: #444;
+}
+
+nav.navigation span.nav-title a {
+    display: block;
+    font-family:'Courier New', Courier, monospace;
+    font-size: larger;
+    color:whitesmoke;
+    background-color: #333;
+    text-align: center;
+    padding: 15px;
+    margin: 0px 15px 0px 15px;
+    text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .item {
+        flex: 1 0 100%;   
+    }
+
+    .search select {
+        width: 100%;
+    }
+
+    .search input {
+        width: 100%;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 800px) {
+    .item {
+        flex: 1 0 50%;   
+    }
+
+    .search select {
+        width: 100px;
+    }
+
+    .search input {
+        width: 300px;
+    }
+}
+
+@media (max-width: 800px) {
+    nav.navigation {
+        justify-content: center;
+        flex-direction: column;
+    }
+    nav.navigation ul {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+@media (min-width: 801px) {
+    .item {
+        flex: 1 0 33%;   
+    }
+    .search select {
+        width: 200px;
+    }
+
+    .search input {
+        width: 500px;
+    }
+}
+
+
+/* forms */
+
+div.form-element {
+    display: flex;
+    margin: 10px 0 10px 0px;
+    border: 2px solid black;
+    height: 28px;
+    overflow: hidden;
+}
+
+div.form-element label {
+    display: inline-block;
+    width: 200px;
+    height: 100%;
+    text-align: center;
+    background-color: #ccc;
+    border-right: 2px solid grey;
+}
+
+div.form-element input.text-input {
+    display: inline-block;
+    border: none;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+}
+
+.form-button {
+    display: inline-block;
+    border-radius: 4px;
+    border: none;
+    width: 150px;
+    height: 25px;
+}
+
+.form-submit {
+    background-color: #24e;
+    color:#eee;
+}
+
+.form-submit:hover {
+    background-color: #35f;
+}
+
+.form-cancel {
+    background-color: #e42;
+    color:#eee;
+}
+
+.form-cancel:hover {
+    background-color: #f53;
+}
+
+/* animation */
+
+@keyframes slide-from-left {
+    from {
+        margin-left: 50%;
+        width: 200%;
+        opacity: 0;
+    }
+    
+    to {
+        margin-left: 0%;
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes slide-from-bottom {
+    0% {
+        margin-top: 10%;
+        opacity: 0;
+    }
+
+    50% {
+        margin-top: 10%;
+        opacity: 0;
+    }
+    
+    100% {
+        margin-top: 0%;
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+.slide-from-left {
+    animation: slide-from-left ease-out 1s alternate;
+}
+
+.slide-from-bottom {
+    animation: slide-from-bottom ease-out 2s alternate;
+}
+
+/* etc */
+#img-bit {
+    transform: rotate(0deg);
+}
+#img-bit:hover {
+    transition: ease-in-out transform 1s;
+    transform: rotate(360deg);
+}
+
+#img-eth {
+    margin: 25%;
+    width: 50%;
+    height: 50%;
+}
+
+#img-eth:hover {
+    transition: linear;
+    transition-property: margin width height;
+    transition-duration: 2s;
+    margin:0%;
+    width: 100%;
+    height: 100%;
+}
+
+.hidden {
+    opacity: 0%;
+}
+
+
+.toggle {
+    opacity: 100%;
+}

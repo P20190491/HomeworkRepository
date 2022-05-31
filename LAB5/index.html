@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Main Page</title>
+        <link rel="stylesheet" type="text/css" href="./main.css">
+        <meta charset="utf-8">
+        <script src="main.js"></script>
+        <script>
+            function displayItems(items, refresh) {
+                console.log("clear item list");                
+                let container = document.getElementById("items");
+                
+                if(refresh) {
+                    window.item_offset = 0;
+                    container.innerHTML = '';
+                }
+
+                function displayItem(item) {
+                    let node = document.createElement("div");
+                    node.classList.add("item");
+
+                    let name = document.createElement("h3");
+                    name.innerText = item.name;
+                    name.classList.add("hidden");
+                    node.appendChild(name);
+                    
+                    let image_container = document.createElement("div");
+                    let image = document.createElement("img");
+                    image.setAttribute("src", item.image);
+                    image.setAttribute("alt", item.image)
+                    image_container.classList.add("item-img");
+                    image_container.appendChild(image);
+                    
+                    node.appendChild(image_container);
+
+                    node.innerHTML += `<p class="hidden">가격:${item.price}</p><button class="hidden form-button form-submit">구매</button>`;
+                
+                    container.appendChild(node);
+
+                    node.querySelector("img").onclick = function(e) {
+                        console.log(this);
+                        let ct = this.parentNode.parentNode;
+                        document.querySelectorAll(".toggle").forEach(e => {
+                            if(!ct.contains(e)) {
+                                e.classList.remove("toggle");
+                            }
+                        });
+                        ct.querySelectorAll(".hidden").forEach(e => {
+                            if(e.classList.contains("toggle")) {
+                                e.classList.remove("toggle");
+                            }
+                            else {
+                                e.classList.add("toggle");
+                            }
+                        });
+                    };
+                }
+
+                let i;
+                
+                for(i = window.item_offset; i < window.max_items; i++) {
+                    let index = i % items.length;
+                    displayItem(items[index]);
+                }
+
+                window.item_offset = i;
+
+            }
+            var e = fetchProduct().then(e => {
+                console.log(e);
+            });
+            
+            window.max_items = 12;
+            window.item_offset = 0;
+            window.page_size = 6;
+
+            function refreshProducts(refresh) {
+                displayItems(window.target_items, refresh);
+            }
+
+            window.onload = async () => {
+                function updateTarget() {
+                    let items = window.items;
+                    let category = document.getElementById("category-select").value;
+                    if(category == "All") category = null;
+                    let name = document.getElementById("item-name").value;
+                    let target_items = filterProduct(category, name, items);
+                    window.target_items = target_items;
+                }
+
+                // register event handlers
+                document.getElementById("category-select").onchange = function () {
+                    window.max_items = 12;
+                    updateTarget();
+                    refreshProducts(true);
+                };
+                document.getElementById("item-name").onchange = function () {
+                    window.max_items = 12;
+                    updateTarget();
+                    refreshProducts(true);
+                };
+
+                // fetch products
+                let products;
+                try {
+                    products = await fetchProduct();
+                }
+                catch(e) {
+                    alert(`정보를 불러올 수 없습니다. 오류 : ${e}`);
+                }
+                
+                // register categories
+                let category_node = document.getElementById("category-select");
+
+                products.categories.forEach(e => {
+                    let option = document.createElement("option");
+                    option.innerText = e;
+                    category_node.appendChild(option);
+                });
+                
+                window.items = products.items;
+                updateTarget();
+                refreshProducts(true);
+
+                window.onscroll = function() {
+                    if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
+                        window.max_items += window.page_size;
+                        updateTarget();
+                        refreshProducts();
+                    }
+                }
+            };
+            
+        </script>
+    </head>
+    <body>
+        <header>
+            <nav class="navigation">
+                <span class="nav-title"><a href="./index.html">Anonymous Secret Shop</a></span>
+                <ul>
+                    <li><a href="./login.html">로그인</a></li>
+                    <li><a href="./signup.html">회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h1 class="title slide-from-left">메인 페이지</h1>
+            <p>원하는 아이템을 구매하세요.</p>
+            <div class="search">
+                <img src="./filter-512.webp" alt="카테고리"/>
+                <select id="category-select" style="width: 150px;">
+                    <option selected>All</option>
+                </select>
+                <input id="item-name" type="text" placeholder="아이템 이름"/>
+            </div>
+            <hr/>
+            <div id="items" class="item-container">
+                <div class="item">
+                    <h3>Bitcoin</h3>
+                    <div class="item-img">
+                        <img id="img-bit" src="./bitcoin.webp" alt="Bitcoin"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+                <div class="item">
+                    <h3>Ethereum</h3>
+                    <div class="item-img">
+                        <img id="img-eth" src="./ethereum.png" alt="Ethereum"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div><div class="item">
+                    <h3>Bitcoin</h3>
+                    <div class="item-img">
+                        <img id="img-bit" src="./bitcoin.webp" alt="Bitcoin"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+                <div class="item">
+                    <h3>Ethereum</h3>
+                    <div class="item-img">
+                        <img id="img-eth" src="./ethereum.png" alt="Ethereum"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div><div class="item">
+                    <h3>Bitcoin</h3>
+                    <div class="item-img">
+                        <img id="img-bit" src="./bitcoin.webp" alt="Bitcoin"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+                <div class="item">
+                    <h3>Ethereum</h3>
+                    <div class="item-img">
+                        <img id="img-eth" src="./ethereum.png" alt="Ethereum"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
