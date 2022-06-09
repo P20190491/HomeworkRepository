@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Main Page</title>
+        <link rel="stylesheet" type="text/css" href="/main.css">
+        <meta charset="utf-8">
+        <script src="main.js"></script>
+        <script>
+            function displayItems(items, refresh) {
+                let container = document.getElementById("items");
+                
+                if(refresh) {
+                    container.innerHTML = '';
+                }
+
+                function displayItem(item) {
+
+                    let node = document.createElement("div");
+                    node.classList.add("item");
+
+                    let name = document.createElement("h3");
+                    name.innerText = item.product_title;
+                    name.classList.add("hidden");
+                    node.appendChild(name);
+                    
+                    let image_container = document.createElement("div");
+                    let image = document.createElement("img");
+                    image.setAttribute("src", item.product_image);
+                    image.setAttribute("alt", item.product_image)
+                    image_container.classList.add("item-img");
+                    image_container.appendChild(image);
+                    
+                    node.appendChild(image_container);
+
+                    node.innerHTML += `<p class="hidden">가격:${item.product_price}</p><button onclick="location.href='/product/${item.product_id}'" class="hidden form-button form-submit">상세정보</button>`;
+                
+                    container.appendChild(node);
+
+                    node.querySelector("img").onclick = function(e) {
+                        let ct = this.parentNode.parentNode;
+                        document.querySelectorAll(".toggle").forEach(e => {
+                            if(!ct.contains(e)) {
+                                e.classList.remove("toggle");
+                            }
+                        });
+                        ct.querySelectorAll(".hidden").forEach(e => {
+                            if(e.classList.contains("toggle")) {
+                                e.classList.remove("toggle");
+                            }
+                            else {
+                                e.classList.add("toggle");
+                            }
+                        });
+                    };
+                }
+
+                let i;
+                
+				console.log("update : " + items.length);
+				console.log(items);
+                for(i = 0; i < items.length; i++) {
+                    displayItem(items[i]);
+                }
+            }
+            
+            window.max_items = 12;
+            window.item_offset = 0;
+            window.page_size = 6;
+			window.target_items = [];
+
+            function refreshProducts(refresh) {
+                displayItems(window.target_items, refresh);
+            }
+
+            window.onload = async () => {
+                async function loadTarget() {
+                    let category = document.getElementById("category-select").value;
+                    if(category == "All") category = null;
+                    let name = document.getElementById("item-name").value;
+                    let target_items = await fetchProduct(name, category, window.item_offset, window.max_items - window.item_offset);
+                    window.target_items = target_items;
+                	window.item_offset = window.max_items;
+                    window.max_items += window.page_size;
+				}
+
+                // register event handlers
+                document.getElementById("category-select").onchange = async function () {
+                    window.item_offset = 0;
+					window.max_items = 12;
+                    await loadTarget();
+                    refreshProducts(true);
+                };
+                document.getElementById("item-name").onchange = async function () {
+                    window.item_offset = 0;
+					window.max_items = 12;
+                    await loadTarget();
+                    refreshProducts(true);
+                };
+                
+                window.item_offset = 0;
+				window.max_items = 12;
+				await loadTarget();
+                refreshProducts(true);
+
+                window.onscroll = async function() {
+                    if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
+						if(window.loading) return;
+						window.loading = true;
+                        await loadTarget();
+                        refreshProducts();
+						window.loading = false;
+                    }
+                }
+            };
+            
+        </script>
+    </head>
+    <body>
+        <header>
+            <nav class="navigation">
+                <span class="nav-title"><a href="/">Anonymous Secret Shop</a></span>
+                <ul>
+                    <li><a href="/login">로그인</a></li>
+                    <li><a href="/signup">회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h1 class="title slide-from-left">메인 페이지</h1>
+            <p>원하는 아이템을 구매하세요.</p>
+            <div class="search">
+                <img src="./filter-512.webp" alt="카테고리"/>
+                <select id="category-select" style="width: 150px;">
+                    <option selected>All</option>
+					<% for (var ct of category) { %>
+						<option><%= ct %></option>
+					<% } %>
+                </select>
+                <input id="item-name" type="text" placeholder="아이템 이름"/>
+            </div>
+            <hr/>
+            <div id="items" class="item-container">
+                <div class="item">
+                    <h3>Bitcoin</h3>
+                    <div class="item-img">
+                        <img id="img-bit" src="./bitcoin.webp" alt="Bitcoin"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+                <div class="item">
+                    <h3>Ethereum</h3>
+                    <div class="item-img">
+                        <img id="img-eth" src="./ethereum.png" alt="Ethereum"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div><div class="item">
+                    <h3>Bitcoin</h3>
+                    <div class="item-img">
+                        <img id="img-bit" src="./bitcoin.webp" alt="Bitcoin"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+                <div class="item">
+                    <h3>Ethereum</h3>
+                    <div class="item-img">
+                        <img id="img-eth" src="./ethereum.png" alt="Ethereum"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div><div class="item">
+                    <h3>Bitcoin</h3>
+                    <div class="item-img">
+                        <img id="img-bit" src="./bitcoin.webp" alt="Bitcoin"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+                <div class="item">
+                    <h3>Ethereum</h3>
+                    <div class="item-img">
+                        <img id="img-eth" src="./ethereum.png" alt="Ethereum"/>
+                    </div>
+                    <br/>
+                    <button class="form-button form-submit">구매</button>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

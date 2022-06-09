@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Product - <%= product_title %></title>
+        <link rel="stylesheet" type="text/css" href="/main.css">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <header>
+            <nav class="navigation">
+                <span class="nav-title"><a href="/">Anonymous Secret Shop</a></span>
+                <ul>
+                    <li><a href="/login">로그인</a></li>
+                    <li><a href="/signup">회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+			<div class="item">
+				<h3><%= product_title %></h3>
+				<div class="item-img">
+					<img id="img-eth" src="<%= product_image %>" alt="<%= product_title %>"/>
+				</div>
+				<br/>
+				<p>상품번호 : <%= product_id %></p>
+				<p>가격 : <%= product_price %></p>
+				<p>종류 : <%= product_category %></p>
+				<br/>
+				<button class="form-button form-submit">구매</button>
+			</div>
+			<hr/>
+			<div class="comment">
+				<% if (nocomment) { %>
+					<div class="comment-item comment-item-null">
+						<p>아직은 코멘트가 없습니다. 첫 코멘트를 등록해보세요.</p>
+					</div>
+				<% } else { %>
+					<% for(var c of comments) { %>
+					<div class="comment-item">
+						<p><%= c %></p>
+					</div>
+					<% } %>
+				<% } %>
+			</div>
+			<form action='/comment' method='post'>
+				<input type='hidden' name='id' value='<%= product_id %>'/>
+				<div class="form-element">
+                    <label id="form_name">코멘트</label>
+                    <input class="text-input" name="comment" aria-labelledby="form_name" required/>
+                </div>
+				<input class="form-button form-success form-center" type="submit"/>
+			</form>
+		</main>
+    </body>
+</html>
