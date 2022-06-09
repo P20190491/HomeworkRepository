@@ -95,7 +95,7 @@ app.get('/product/:product_id', async (req, res) => {
 
 app.post('/comment', (req, res) => {
 	let id = req.body.id;
-	let comment_text = req.body.comment.replace(/[&<>'"\ ]/g, t => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;', ' ': '&nbsp;' }[t]));
+	let comment_text = req.body.comment;
 	comment.addComment(id, comment_text);
 	res.redirect(`/product/${id}`);
 });
